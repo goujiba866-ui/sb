@@ -32,7 +32,7 @@ main.Start = returnnil
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "傻逼脚本",
-	Text = "小轩制作",
+	Text = "老六制作",
 	Duration = 5;
 })
 wait(0.1)
@@ -52,7 +52,7 @@ local UITab5 = win:Tab("传送",'7734068321')
 
 local about = UITab1:section("公告",true)
 
-about:Label("小轩制作")
+about:Label("老六制作")
 about:Label("脚本测试中")
 local about = UITab2:section("脚本",true)
 about:Slider("视角缩放距离", "Slider",  128, 128, 10000, false, function(Value)
