@@ -9,7 +9,7 @@ old = hookmetamethod(game:GetService("StarterGui"), "__namecall", newcclosure(fu
             local options = args[2]
             if type(options) == "table" and 
                tostring(options.Title) == "老六脚本" and 
-               tostring(options.Text) == "老六製作" 
+               tostring(options.Text) == "老六制作" 
             then
                 local modifiedOptions = table.clone(options)
                 modifiedOptions.Text = "1"
@@ -42,8 +42,8 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera 
 local workspace = game:GetService("Workspace")  
 local Player = Players.LocalPlayer  
-local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/ni7ykt/RGB-FLY/refs/heads/main/rjr%20ui"))()  
-local win = ui:new("傻逼中心")
+local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/mknhghv/67/refs/heads/main/UI"))()  
+local win = ui:new("老六中心")
 local UITab1 = win:Tab("公告",'7734068321')
 local UITab2 = win:Tab("脚本",'7734068321')
 local UITab3 = win:Tab("秒杀",'7734068321')
@@ -53,7 +53,7 @@ local UITab5 = win:Tab("传送",'7734068321')
 local about = UITab1:section("公告",true)
 
 about:Label("老六制作")
-about:Label("此腳本只限L6團成員使用"）
+about:Label("脚本测试中")
 local about = UITab2:section("脚本",true)
 about:Slider("视角缩放距离", "Slider",  128, 128, 10000, false, function(Value)
     game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = Value
@@ -118,8 +118,16 @@ about:Button("飞行",function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fly"))()
 end)
 
+about:Button("法天象地",function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/法天像地"))()
+end)
+
+about:Button("redz",function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/redz"))()
+end)
+
 about:Button("皮脚本",function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/mknhghv/67/refs/heads/main/%E7%9A%AE.txt"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/皮"))()
 end)
 
 local VirtualUser = game:GetService("VirtualUser")
@@ -128,6 +136,10 @@ game:GetService("Players").LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new(0,0))
     print("零域 | 已攔截掛機檢測，持續運行中...")
+end)
+
+about:Button("fps优化（关闭不了一点傻逼）",function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fps优化"))()
 end)
 
 about:Button("hoho",function()
@@ -851,7 +863,7 @@ task.spawn(function()
 end)
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "傻逼脚本",
-	Text = "加载完成",
+	Title = "零脚本",
+	Text = "加载完成 祝您使用愉快",
 	Duration = 5;
 })
