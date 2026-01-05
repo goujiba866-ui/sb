@@ -6,6 +6,7 @@ local Whitelisted = {
     ["bf520123"] = true,
     ["featheruf_925"] = true,
     ["pphtyv50"] = true,
+    ["kp012304"] = true,
 }
 
 local function IsWhitelisted(player)
