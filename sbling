@@ -49,6 +49,7 @@ local UITab2 = win:Tab("脚本",'7734068321')
 local UITab3 = win:Tab("秒杀",'7734068321')
 local UITab4 = win:Tab("透视",'7734068321')
 local UITab5 = win:Tab("传送",'7734068321')
+local UITab5 = win:Tab("功能2",'7734068321')
 
 local about = UITab1:section("公告",true)
 
