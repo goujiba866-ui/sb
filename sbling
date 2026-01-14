@@ -855,16 +855,112 @@ TP2:Button("传送至九头蛇", function()
     end
 end)
 
+-- 自動大佛 + 拿刀（放在功能2的最下面）
+local buddhaSection = UITab5:section("自動大佛形態 + 拿刀", true)
 
+local autoBuddhaEnabled = false
+local autoBuddhaTask = nil
 
+local function equipMelee()
+    pcall(function()
+        local char = LocalPlayer.Character
+        if not char or not char:FindFirstChild("Humanoid") then return end
+        
+        local alreadyEquipped = char:FindFirstChildOfClass("Tool")
+        if alreadyEquipped and alreadyEquipped.ToolTip == "Melee" then
+            return
+        end
+        
+        for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do
+            if tool:IsA("Tool") and tool.ToolTip == "Melee" then
+                char.Humanoid:EquipTool(tool)
+                task.wait(0.2)
+                return
+            end
+        end
+        warn("[自動大佛] 背包內找不到刀具")
+    end)
+end
 
-task.spawn(function()
-    task.wait(2) 
-    UpdateAllESP()
+local function isBuddhaActive()
+    local char = LocalPlayer.Character
+    if not char then return false end
+    local hum = char:FindFirstChild("Humanoid")
+    if not hum then return false end
+    
+    local depth  = hum:FindFirstChild("BodyDepthScale")
+    local height = hum:FindFirstChild("BodyHeightScale")
+    local width  = hum:FindFirstChild("BodyWidthScale")
+    
+    if depth and height and width then
+        return depth.Value > 1.4 or height.Value > 1.8 or width.Value > 1.4
+    end
+    return false
+end
+
+local function tryActivateBuddha()
+    pcall(function()
+        equipMelee()
+        
+        local fruit = LocalPlayer.Backpack:FindFirstChild("Human: Buddha") 
+                   or LocalPlayer.Backpack:FindFirstChild("Buddha")
+                   or LocalPlayer.Character:FindFirstChild("Human: Buddha") 
+                   or LocalPlayer.Character:FindFirstChild("Buddha")
+                   
+        if not fruit then return end
+        
+        local remote = fruit:FindFirstChildWhichIsA("RemoteFunction", true)
+        if remote then
+            remote:InvokeServer(true)
+        end
+    end)
+end
+
+local function startAutoBuddhaLoop()
+    if autoBuddhaTask then task.cancel(autoBuddhaTask) end
+    
+    autoBuddhaTask = task.spawn(function()
+        while autoBuddhaEnabled do
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                if not isBuddhaActive() then
+                    tryActivateBuddha()
+                else
+                    equipMelee()
+                end
+            end
+            task.wait(1.5)
+        end
+    end)
+end
+
+buddhaSection:Toggle("自動開啟大佛形態 + 強制拿刀", "", false, function(enabled)
+    autoBuddhaEnabled = enabled
+    if enabled then
+        startAutoBuddhaLoop()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "自動大佛", Text = "已啟用（每1.5秒檢查）", Duration = 4
+        })
+    else
+        if autoBuddhaTask then task.cancel(autoBuddhaTask) autoBuddhaTask = nil end
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "自動大佛", Text = "已關閉", Duration = 3
+        })
+    end
 end)
 
-game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "零脚本",
-	Text = "加载完成 祝您使用愉快",
-	Duration = 5;
-})
+buddhaSection:Button("立即嘗試開大佛 + 拿刀", function()
+    tryActivateBuddha()
+end)
+
+-- 最後的載入完成通知
+task.spawn(function()
+    task.wait(1.5)
+    UpdateAllESP()
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "零腳本",
+        Text = "載入完成 祝使用愉快",
+        Duration = 5
+    })
+end)
+
+
