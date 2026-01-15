@@ -841,6 +841,9 @@ end)
 
 
 
+
+
+
 -- 自動大佛 Z（模擬按 Z 開果實）+ 模擬左鍵點擊刀 M1（結合秒殺）
 local buddhaSection = UITab5:section("自動大佛 Z + 模擬點擊刀", true)
 
