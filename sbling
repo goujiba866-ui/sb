@@ -855,34 +855,17 @@ TP2:Button("传送至九头蛇", function()
     end
 end)
 
--- 自動大佛 + 拿刀（放在功能2的最下面）
-local buddhaSection = UITab5:section("自動大佛形態 + 拿刀", true)
+
+
+
+-- 自動大佛 Z（模擬按 Z 開果實）+ 模擬左鍵點擊刀 M1（結合秒殺）
+local buddhaSection = UITab5:section("自動大佛 Z + 模擬點擊刀", true)
 
 local autoBuddhaEnabled = false
 local autoBuddhaTask = nil
+local VirtualUser = game:GetService("VirtualUser")
 
-local function equipMelee()
-    pcall(function()
-        local char = LocalPlayer.Character
-        if not char or not char:FindFirstChild("Humanoid") then return end
-        
-        local alreadyEquipped = char:FindFirstChildOfClass("Tool")
-        if alreadyEquipped and alreadyEquipped.ToolTip == "Melee" then
-            return
-        end
-        
-        for _, tool in ipairs(LocalPlayer.Backpack:GetChildren()) do
-            if tool:IsA("Tool") and tool.ToolTip == "Melee" then
-                char.Humanoid:EquipTool(tool)
-                task.wait(0.2)
-                return
-            end
-        end
-        warn("[自動大佛] 背包內找不到刀具")
-    end)
-end
-
-local function isBuddhaActive()
+local function isTransformed()
     local char = LocalPlayer.Character
     if not char then return false end
     local hum = char:FindFirstChild("Humanoid")
@@ -892,65 +875,104 @@ local function isBuddhaActive()
     local height = hum:FindFirstChild("BodyHeightScale")
     local width  = hum:FindFirstChild("BodyWidthScale")
     
-    if depth and height and width then
-        return depth.Value > 1.4 or height.Value > 1.8 or width.Value > 1.4
-    end
-    return false
+    return (depth and depth.Value > 1.5) or (height and height.Value > 2) or (width and width.Value > 1.5)
 end
 
-local function tryActivateBuddha()
+local function hasMeleeEquipped()
+    local char = LocalPlayer.Character
+    if not char then return false end
+    
+    local tool = char:FindFirstChildOfClass("Tool")
+    if not tool then return false end
+    
+    -- 檢查是否為刀/劍/格鬥（不從背包找，只檢查已裝備）
+    return tool.ToolTip == "Sword" or tool.ToolTip == "Melee" or tool.Name:find("刀") or tool.Name:find("Katana")
+end
+
+local function simulateZKey()  -- 模擬按 Z 開大佛（假設果實已裝備）
     pcall(function()
-        equipMelee()
-        
-        local fruit = LocalPlayer.Backpack:FindFirstChild("Human: Buddha") 
-                   or LocalPlayer.Backpack:FindFirstChild("Buddha")
-                   or LocalPlayer.Character:FindFirstChild("Human: Buddha") 
-                   or LocalPlayer.Character:FindFirstChild("Buddha")
-                   
-        if not fruit then return end
-        
-        local remote = fruit:FindFirstChildWhichIsA("RemoteFunction", true)
-        if remote then
-            remote:InvokeServer(true)
-        end
+        VirtualUser:CaptureController()
+        VirtualUser:Button1Down(Vector2.new())  -- 模擬滑鼠定位（可選）
+        keypress(0x5A)  -- Z 鍵代碼 (0x5A = 'Z')
+        task.wait(0.1)
+        keyrelease(0x5A)
+        print("[模擬 Z] 已模擬按 Z 開大佛")
     end)
 end
 
-local function startAutoBuddhaLoop()
-    if autoBuddhaTask then task.cancel(autoBuddhaTask) end
+local function simulateKnifeClick()  -- 模擬左鍵點擊刀 M1（結合第一功能秒殺邏輯）
+    pcall(function()
+        if not hasMeleeEquipped() then
+            warn("[模擬點擊] 手上無刀，跳過 M1")
+            return
+        end
+        
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton1(Vector2.new())  -- 模擬左鍵點擊（M1 攻擊）
+        print("[模擬點擊] 已模擬刀 M1 點擊")
+    end)
+end
+
+local function tryAutoBuddhaAndAttack()
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        if not isTransformed() then
+            simulateZKey()  -- 先模擬 Z 開大佛
+            task.wait(0.5)  -- 等變身完成
+        end
+        
+        -- 模擬點擊刀 M1（每輪執行一次，結合秒殺自動循環）
+        simulateKnifeClick()
+    end
+end
+
+local function autoBuddhaLoop()
+    if autoBuddhaTask then 
+        task.cancel(autoBuddhaTask) 
+        autoBuddhaTask = nil
+    end
     
     autoBuddhaTask = task.spawn(function()
         while autoBuddhaEnabled do
-            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if not isBuddhaActive() then
-                    tryActivateBuddha()
-                else
-                    equipMelee()
-                end
-            end
-            task.wait(1.5)
+            tryAutoBuddhaAndAttack()
+            task.wait(0.8)  -- 循環間隔：Z + M1，調整為適合攻速（結合秒殺 ClickDelay）
         end
     end)
 end
 
-buddhaSection:Toggle("自動開啟大佛形態 + 強制拿刀", "", false, function(enabled)
+buddhaSection:Toggle("自動模擬 Z + 點擊刀 M1", "", false, function(enabled)
     autoBuddhaEnabled = enabled
+    
     if enabled then
-        startAutoBuddhaLoop()
+        autoBuddhaLoop()
+        -- 確保第一功能（秒殺）已開（可選自動開啟）
+        if _ENV.rz_FastAttack then
+            _ENV.rz_FastAttack.IsRunning = true
+            _G.FastAttack = true
+        end
         game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "自動大佛", Text = "已啟用（每1.5秒檢查）", Duration = 4
+            Title = "模擬大佛 Z + 刀點擊",
+            Text = "已啟用 - 模擬按 Z 變身 + 左鍵 M1（秒殺已自動開）",
+            Duration = 6
         })
     else
-        if autoBuddhaTask then task.cancel(autoBuddhaTask) autoBuddhaTask = nil end
+        if autoBuddhaTask then 
+            task.cancel(autoBuddhaTask) 
+            autoBuddhaTask = nil 
+        end
         game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "自動大佛", Text = "已關閉", Duration = 3
+            Title = "模擬大佛 Z + 刀點擊",
+            Text = "已關閉",
+            Duration = 3
         })
     end
 end)
 
-buddhaSection:Button("立即嘗試開大佛 + 拿刀", function()
-    tryActivateBuddha()
+buddhaSection:Button("立即模擬 Z + 點擊刀", function()
+    tryAutoBuddhaAndAttack()
 end)
+
+buddhaSection:Label("提示：請先手動裝備大佛果實 + 刀，腳本只模擬按鍵/點擊")
+buddhaSection:Label("秒殺功能會自動開啟，攻速可調節 ClickDelay")
 
 -- 最後的載入完成通知
 task.spawn(function()
@@ -962,5 +984,3 @@ task.spawn(function()
         Duration = 5
     })
 end)
-
-
