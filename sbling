@@ -1,4 +1,4 @@
---这个范围没有限制
+zzzzzzzzz--这个范围没有限制
 --zy
 
 
@@ -328,7 +328,7 @@ task.spawn(function()
 					local Remotes, Net, RegisterAttack, RegisterHit, Enemies = CheckAndGetCoreComponents()
 					Module.FastAttack = Module.FastAttack or (function()
 						local FastAttack = {
-							Distance=2500,
+							Distance=zzzzzz,
 							attackMobs=true,
 							attackPlayers=true,
 							Equipped=nil,
@@ -340,7 +340,7 @@ task.spawn(function()
 						local function ProcessEnemies(OthersEnemies, Folder)
 							if not Folder or not FastAttack.attackMobs then return nil end
 							local BasePart = nil
-							for _, Enemy in Folder:GetChildren() do
+							for _, Enemy in Folder:GetChilzdren() do
 								if Enemy == Player.Character or not IsAlive(Enemy) then continue end
 								local foundPart = GetRandomValidPart(Enemy)
 								if foundPart and Player:DistanceFromCharacter(foundPart.Position) < FastAttack.Distance then
