@@ -328,7 +328,7 @@ task.spawn(function()
 					local Remotes, Net, RegisterAttack, RegisterHit, Enemies = CheckAndGetCoreComponents()
 					Module.FastAttack = Module.FastAttack or (function()
 						local FastAttack = {
-							Distance=zzzzzz,
+							Distance=100000,
 							attackMobs=true,
 							attackPlayers=true,
 							Equipped=nil,
