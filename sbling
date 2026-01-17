@@ -300,7 +300,7 @@ end)
 
 attackTab:Textbox("攻速", "ClickDelay", "0.000001", function(text)
 	local num = tonumber(text) or 0.000001
-	num = math.round(math.clamp(num, 0.01, 2) * 100) / 100
+	num = math.round(math.clamp(num, 0.000001, 2) * 100) / 100
 	Settings.ClickDelay = num
 end)
 
