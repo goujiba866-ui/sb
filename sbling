@@ -298,7 +298,7 @@ attackTab:Textbox("范围", "AttackRange", "100000", function(text)
 	end
 end)
 
-attackTab:Textbox("攻速", "ClickDelay", "0.05", function(text)
+attackTab:Textbox("攻速", "ClickDelay", "0.001", function(text)
 	local num = tonumber(text) or 0.01
 	num = math.round(math.clamp(num, 0.01, 2) * 100) / 100
 	Settings.ClickDelay = num
