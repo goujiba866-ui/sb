@@ -121,7 +121,7 @@ game:GetService("Players").LocalPlayer.Idled:Connect(function()
     print("零域 | 已攔截掛機檢測，持續運行中...")
 end)
 
-about:Button("fps优化（关闭不了一点傻逼）",function()
+about:Button("fps优化（老六是你爸爸傻逼）",function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fps优化"))()
 end)
 
@@ -298,9 +298,9 @@ attackTab:Textbox("范围", "AttackRange", "100000", function(text)
 	end
 end)
 
-attackTab:Textbox("攻速", "ClickDelay", "0.000001", function(text)
-	local num = tonumber(text) or 0.000001
-	num = math.round(math.clamp(num, 0.000001, 2) * 100) / 100
+attackTab:Textbox("攻速", "ClickDelay", "0.00000000001", function(text)
+	local num = tonumber(text) or 0.00000000001
+	num = math.round(math.clamp(num, 0.00000000001, 2) * 100) / 100
 	Settings.ClickDelay = num
 end)
 
