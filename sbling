@@ -964,7 +964,7 @@ task.spawn(function()
     task.wait(1.5)
     UpdateAllESP()
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "零腳本",
+        Title = "老六腳本",
         Text = "載入完成 祝使用愉快",
         Duration = 5
     })
