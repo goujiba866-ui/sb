@@ -36,6 +36,7 @@ local UITab5 = win:Tab("功能2",'7734068321')
 local about = UITab1:section("公告",true)
 
 about:Label("老六制作")
+about:Labe1（"老六的雞巴很大我知道"）
 about:Label("脚本测试中")
 local about = UITab2:section("脚本",true)
 about:Slider("视角缩放距离", "Slider",  128, 128, 10000, false, function(Value)
