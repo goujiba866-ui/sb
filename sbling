@@ -37,6 +37,9 @@ local about = UITab1:section("公告",true)
 
 about:Label("老六制作")
 about:Label("脚本測試中")
+about:Label("更新繁體中文")
+about:Label("增加自動v3")
+about:Label("自動v3目前還在測試中")
 local about = UITab2:section("脚本",true)
 about:Slider("视角缩放距离", "Slider",  128, 128, 10000, false, function(Value)
     game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = Value
@@ -151,7 +154,7 @@ end)
 
 -- 缝合
 
-about:Button("行行",function()
+about:Button("飛行",function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fly"))()
 end)
 
@@ -185,7 +188,7 @@ end)
 
 -- 大佛功能区
 
-local attackTab = UITab3:section("秒杀",true)
+local attackTab = UITab3:section("範圍+快速攻擊",true)
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local workspace = game:GetService("Workspace")
@@ -193,7 +196,7 @@ local RunService = game:GetService("RunService")
 local Player = Players.LocalPlayer
 local _ENV = (getgenv or getrenv or getfenv)()
 local Settings = {AutoClick = true, ClickDelay = 0.3}
-Settings.Distance = 5000
+Settings.Distance = 1000000000
 local Module = {}
 local _G = _G or getfenv(0)._G
 _G.FastAttack = _G.FastAttack ~= nil and _G.FastAttack or true
@@ -243,7 +246,7 @@ end
 Module.FastAttack = (function()
 	if _ENV.rz_FastAttack then return _ENV.rz_FastAttack end
 	local FastAttack = {
-		Distance = 100000,
+		Distance = 1000000000,
 		attackMobs = true,
 		attackPlayers = true,
 		Equipped = nil,
@@ -344,9 +347,9 @@ attackTab:Toggle("開關", "FastAttackToggle", _G.FastAttack, function(state)
 	end
 end)
 
-attackTab:Textbox("範圍", "AttackRange", "100000", function(text)
-	local num = tonumber(text) or 100000
-	num = math.floor(math.clamp(num, 1, 100000))
+attackTab:Textbox("範圍", "AttackRange", "1000000000", function(text)
+	local num = tonumber(text) or 1000000000
+	num = math.floor(math.clamp(num, 1, 1000000000))
 	if _ENV.rz_FastAttack then
 		_ENV.rz_FastAttack.Distance = num
 	end
@@ -478,7 +481,7 @@ end)
 
 -- 移速功能
 
-attackTab:Textbox("速度", "TranslateAccelSpeed", "输入速度值", function(Value)
+attackTab:Textbox("速度", "TranslateAccelSpeed", "輸入速度值", function(Value)
     local speed = tonumber(Value)
     if speed then
         getfenv().translateSpeed = speed
