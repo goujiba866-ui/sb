@@ -29,21 +29,21 @@ local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/ni7ykt/RGB
 local win = ui:new("老六中心")
 local UITab1 = win:Tab("公告",'7734068321')
 local UITab2 = win:Tab("脚本",'7734068321')
-local UITab3 = win:Tab("秒杀",'7734068321')
-local UITab4 = win:Tab("透视",'7734068321')
+local UITab3 = win:Tab("主要功能",'7734068321')
+local UITab4 = win:Tab("透視",'7734068321')
 local UITab5 = win:Tab("功能2",'7734068321')
 
 local about = UITab1:section("公告",true)
 
 about:Label("老六制作")
-about:Label("脚本测试中")
+about:Label("脚本測試中")
 local about = UITab2:section("脚本",true)
 about:Slider("视角缩放距离", "Slider",  128, 128, 10000, false, function(Value)
     game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = Value
 end)
--- 自动v4
+-- 自動v4
 
-local toggleKey = "自动v4"
+local toggleKey = "自動v4"
 local autoV4Task = nil
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -97,7 +97,7 @@ end)
 
 -- 缝合
 
-about:Button("飞行",function()
+about:Button("行行",function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fly"))()
 end)
 
@@ -121,7 +121,7 @@ game:GetService("Players").LocalPlayer.Idled:Connect(function()
     print("零域 | 已攔截掛機檢測，持續運行中...")
 end)
 
-about:Button("fps优化（老六是你爸爸傻逼）",function()
+about:Button("fps优化（關閉不了一點）",function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaoxuan-77/-/refs/heads/main/fps优化"))()
 end)
 
@@ -283,14 +283,14 @@ Module.FastAttack = (function()
 end)()
 
 -- UI控件绑定
-attackTab:Toggle("开关", "FastAttackToggle", _G.FastAttack, function(state)
+attackTab:Toggle("開關", "FastAttackToggle", _G.FastAttack, function(state)
 	if _ENV.rz_FastAttack then
 		_ENV.rz_FastAttack.IsRunning = state
 		_G.FastAttack = state
 	end
 end)
 
-attackTab:Textbox("范围", "AttackRange", "100000", function(text)
+attackTab:Textbox("範圍", "AttackRange", "100000", function(text)
 	local num = tonumber(text) or 100000
 	num = math.floor(math.clamp(num, 1, 100000))
 	if _ENV.rz_FastAttack then
@@ -304,13 +304,13 @@ attackTab:Textbox("攻速", "ClickDelay", "0.000001", function(text)
 	Settings.ClickDelay = num
 end)
 
-attackTab:Toggle("打怪", "AttackMobsToggle", true, function(state)
+attackTab:Toggle("自動M1打怪", "AttackMobsToggle", true, function(state)
 	if _ENV.rz_FastAttack then
 		_ENV.rz_FastAttack.attackMobs = state
 	end
 end)
 
-attackTab:Toggle("打人", "AttackPlayersToggle", true, function(state)
+attackTab:Toggle("自動M1打人", "AttackPlayersToggle", true, function(state)
 	if _ENV.rz_FastAttack then
 		_ENV.rz_FastAttack.attackPlayers = state
 	end
@@ -431,7 +431,7 @@ attackTab:Textbox("速度", "TranslateAccelSpeed", "输入速度值", function(V
     end
 end)
 
-attackTab:Toggle("加速开关", "TranslateAccelToggle", false, function(State)
+attackTab:Toggle("加速開關", "TranslateAccelToggle", false, function(State)
     getfenv().translateAccelEnabled = State
     
     if State then
@@ -463,8 +463,8 @@ attackTab:Toggle("加速开关", "TranslateAccelToggle", false, function(State)
     end
 end)
 
--- 透视功能
-local about = UITab4:section("透视",true)
+-- 透視功能
+local about = UITab4:section("透視",true)
 
 
 local ESPConfig = {
@@ -710,17 +710,17 @@ task.spawn(function()
     end
 end)
 
-about:Toggle("透视总开关", "ESP_Main", false, function(enabled)
+about:Toggle("透視總開關", "ESP_Main", false, function(enabled)
     ESPConfig.MainSwitch = enabled
     UpdateAllESP()
 end)
 
-about:Toggle("显示玩家名字+距离", "ESP_NameDistance", false, function(enabled)
+about:Toggle("顯示玩家名字+距离", "ESP_NameDistance", false, function(enabled)
     ESPConfig.ShowNameDistance = enabled
     UpdateAllESP()
 end)
 
-about:Toggle("显示玩家血量", "ESP_Health", false, function(enabled)
+about:Toggle("顯示玩家血量", "ESP_Health", false, function(enabled)
     ESPConfig.ShowHealth = enabled
     UpdateAllESP()
 end)
@@ -732,23 +732,23 @@ end)
 
 
 
-local TP = UITab5:section("传送",false)
+local TP = UITab5:section("傳送",false)
 
 
-TP:Button("传送至一海", function()
+TP:Button("傳送至一海", function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
 end)
 
-TP:Button("传送至二海", function()
+TP:Button("傳送至二海", function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
 end)
 
-TP:Button("传送至三海", function()
+TP:Button("傳送至三海", function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
 end)
 
 local TP1 = UITab5:section("二海",false)
-TP1:Button("传送至天鹅的房间", function()
+TP1:Button("傳送至天鵝房間", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-287.37, 305.81, 592.98)
@@ -759,7 +759,7 @@ TP1:Button("传送至天鹅的房间", function()
     end
 end)
 
-TP1:Button("传送至豪宅", function()
+TP1:Button("傳送至豪宅", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(2286.93, 15.06, 910.51)
@@ -770,7 +770,7 @@ TP1:Button("传送至豪宅", function()
     end
 end)
 
-TP1:Button("传送至鬼船里", function()
+TP1:Button("傳送至鬼船里", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-6501.06, 83.11, -123.52)
@@ -781,19 +781,19 @@ TP1:Button("传送至鬼船里", function()
     end
 end)
 
-TP1:Button("传送至鬼船外", function()
+TP1:Button("傳送至鬼船外", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(922.78, 123.96, 32842.40)
     
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
-        print("已传送到鬼船外:", targetPosition)
+        print("已傳送到鬼船外:", targetPosition)
     end
 end)
 local TP2 = UITab5:section("三海",false)
 
-TP2:Button("传送至海洋城堡", function()
+TP2:Button("傳送至海洋城堡", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-12463.60, 376.26, -7566.08)
@@ -804,18 +804,18 @@ TP2:Button("传送至海洋城堡", function()
     end
 end)
 
-TP2:Button("传送至海龟豪宅", function()
+TP2:Button("傳送至海龟豪宅", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-5060.41, 316.43, -3192.30)
     
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         player.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
-        print("已传送到海龟豪宅:", targetPosition)
+        print("已傳送送到海龟豪宅:", targetPosition)
     end
 end)
 
-TP2:Button("传送至司法", function()
+TP2:Button("傳送至司法", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-5096.48, 316.43, -3177.91)
@@ -826,7 +826,7 @@ TP2:Button("传送至司法", function()
     end
 end)
 
-TP2:Button("传送至九头蛇", function()
+TP2:Button("傳送至九头蛇", function()
     local Players = game:GetService("Players")
     local player = Players.LocalPlayer
     local targetPosition = Vector3.new(-5027.03, 316.43, -3206.07)
@@ -836,128 +836,62 @@ TP2:Button("传送至九头蛇", function()
         print("已传送到九头蛇:", targetPosition)
     end
 end)
+-- 自動v3
 
+local toggleKey = "自動v3"
+local autoV4Task = nil
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
-
-
-
-
-
--- 自動大佛 Z（模擬按 Z 開果實）+ 模擬左鍵點擊刀 M1（結合秒殺）
-local buddhaSection = UITab5:section("自動大佛 Z + 模擬點擊刀", true)
-
-local autoBuddhaEnabled = false
-local autoBuddhaTask = nil
-local VirtualUser = game:GetService("VirtualUser")
-
-local function isTransformed()
-    local char = LocalPlayer.Character
-    if not char then return false end
-    local hum = char:FindFirstChild("Humanoid")
-    if not hum then return false end
-    
-    local depth  = hum:FindFirstChild("BodyDepthScale")
-    local height = hum:FindFirstChild("BodyHeightScale")
-    local width  = hum:FindFirstChild("BodyWidthScale")
-    
-    return (depth and depth.Value > 1.5) or (height and height.Value > 2) or (width and width.Value > 1.5)
+local function getToggleState(key)
+    if not _G.ToggleStates then _G.ToggleStates = {} end
+    return _G.ToggleStates[key] or false
 end
 
-local function hasMeleeEquipped()
-    local char = LocalPlayer.Character
-    if not char then return false end
+local function callAwakeningRemote()
+    local Backpack = LocalPlayer:FindFirstChild("Backpack")
+    if not Backpack then return end
     
-    local tool = char:FindFirstChildOfClass("Tool")
-    if not tool then return false end
+    local Awakening = Backpack:FindFirstChild("Awakening")
+    if not Awakening then return end
     
-    -- 檢查是否為刀/劍/格鬥（不從背包找，只檢查已裝備）
-    return tool.ToolTip == "Sword" or tool.ToolTip == "Melee" or tool.Name:find("刀") or tool.Name:find("Katana")
-end
-
-local function simulateZKey()  -- 模擬按 Z 開大佛（假設果實已裝備）
-    pcall(function()
-        VirtualUser:CaptureController()
-        VirtualUser:Button1Down(Vector2.new())  -- 模擬滑鼠定位（可選）
-        keypress(0x5A)  -- Z 鍵代碼 (0x5A = 'Z')
-        task.wait(0.1)
-        keyrelease(0x5A)
-        print("[模擬 Z] 已模擬按 Z 開大佛")
+    local RemoteFunc = Awakening:FindFirstChild("RemoteFunction")
+    if not RemoteFunc or not RemoteFunc:IsA("RemoteFunction") then return end
+    
+    local success, err = pcall(function()
+        RemoteFunc:InvokeServer(true)
     end)
-end
-
-local function simulateKnifeClick()  -- 模擬左鍵點擊刀 M1（結合第一功能秒殺邏輯）
-    pcall(function()
-        if not hasMeleeEquipped() then
-            warn("[模擬點擊] 手上無刀，跳過 M1")
-            return
-        end
-        
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton1(Vector2.new())  -- 模擬左鍵點擊（M1 攻擊）
-        print("[模擬點擊] 已模擬刀 M1 點擊")
-    end)
-end
-
-local function tryAutoBuddhaAndAttack()
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        if not isTransformed() then
-            simulateZKey()  -- 先模擬 Z 開大佛
-            task.wait(0.5)  -- 等變身完成
-        end
-        
-        -- 模擬點擊刀 M1（每輪執行一次，結合秒殺自動循環）
-        simulateKnifeClick()
+    if not success then
+        warn("自动v3调用失败：", err)
     end
 end
 
-local function autoBuddhaLoop()
-    if autoBuddhaTask then 
-        task.cancel(autoBuddhaTask) 
-        autoBuddhaTask = nil
+local function toggleAutoV3(enable)
+    if autoV3Task then
+        task.cancel(autoV3Task)
+        autoV3Task = nil
     end
     
-    autoBuddhaTask = task.spawn(function()
-        while autoBuddhaEnabled do
-            tryAutoBuddhaAndAttack()
-            task.wait(0.8)  -- 循環間隔：Z + M1，調整為適合攻速（結合秒殺 ClickDelay）
-        end
-    end)
+    if enable then
+        autoV4Task = task.spawn(function()
+            while getToggleState(toggleKey) do
+                callAwakeningRemote()
+                task.wait(1) 
+            end
+            autoV3Task = nil
+        end)
+    end
 end
 
-buddhaSection:Toggle("自動模擬 Z + 點擊刀 M1", "", false, function(enabled)
-    autoBuddhaEnabled = enabled
+about:Toggle(toggleKey, "Toggle", false, function(IsEnabled)
+    if not _G.ToggleStates then _G.ToggleStates = {} end
+    _G.ToggleStates[toggleKey] = IsEnabled
     
-    if enabled then
-        autoBuddhaLoop()
-        -- 確保第一功能（秒殺）已開（可選自動開啟）
-        if _ENV.rz_FastAttack then
-            _ENV.rz_FastAttack.IsRunning = true
-            _G.FastAttack = true
-        end
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "模擬大佛 Z + 刀點擊",
-            Text = "已啟用 - 模擬按 Z 變身 + 左鍵 M1（秒殺已自動開）",
-            Duration = 6
-        })
-    else
-        if autoBuddhaTask then 
-            task.cancel(autoBuddhaTask) 
-            autoBuddhaTask = nil 
-        end
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "模擬大佛 Z + 刀點擊",
-            Text = "已關閉",
-            Duration = 3
-        })
-    end
+    toggleAutoV3(IsEnabled)
 end)
 
-buddhaSection:Button("立即模擬 Z + 點擊刀", function()
-    tryAutoBuddhaAndAttack()
-end)
 
-buddhaSection:Label("提示：請先手動裝備大佛果實 + 刀，腳本只模擬按鍵/點擊")
-buddhaSection:Label("秒殺功能會自動開啟，攻速可調節 ClickDelay")
+
 
 -- 最後的載入完成通知
 task.spawn(function()
