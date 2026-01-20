@@ -94,6 +94,7 @@ about:Toggle(toggleKey, "Toggle", false, function(IsEnabled)
     
     toggleAutoV4(IsEnabled)
 end)
+
 -- 自動v3
 
 local toggleKey = "自動v3"
