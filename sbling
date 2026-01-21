@@ -894,47 +894,7 @@ TP2:Button("傳送至九头蛇", function()
     end
 end)
 
--- 自動開見聞色 Observation Haki
--- 適用於常見 Executor（Synapse / Fluxus / KRNL）
 
-attackTab:Toggle = "自動見聞"
-local Players = game:GetService("Players")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local player = Players.LocalPlayer
-
--- 設定
-local CHECK_DELAY = 1 -- 每幾秒檢查一次
-local ENABLE = true
-
--- 判斷是否已開見聞色
-local function IsObservationOn()
-    local char = player.Character
-    if not char then return false end
-
-    local haki = char:FindFirstChild("Observation")
-    return haki and haki.Value == true
-end
-
--- 模擬按 E 鍵
-local function ToggleObservation()
-    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-    task.wait(0.1)
-    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-end
-
--- 主循環
-task.spawn(function()
-    while ENABLE do
-        pcall(function()
-            if not IsObservationOn() then
-                ToggleObservation()
-            end
-        end)
-        task.wait(CHECK_DELAY)
-    end
-end)
-
-print("Auto Observation Haki Loaded")
 
 
 
