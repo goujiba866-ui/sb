@@ -897,7 +897,7 @@ end)
 -- 自動開見聞色 Observation Haki
 -- 適用於常見 Executor（Synapse / Fluxus / KRNL）
 
-local toggleKey = "自動見聞"
+attackTab:Toggle = "自動見聞"
 local Players = game:GetService("Players")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local player = Players.LocalPlayer
