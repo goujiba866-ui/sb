@@ -520,6 +520,77 @@ attackTab:Toggle("加速開關", "TranslateAccelToggle", false, function(State)
     end
 end)
 
+-- Author Test Skill: Observation Break + Hard CC + Multi Damage
+-- SAFE VERSION: NPC / Dummy ONLY
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- ===== 設定 =====
+local MARK_TIME = 2
+local STUN_TIME = 1.2
+local HIT_COUNT = 6
+local HIT_INTERVAL = 0.1
+local DAMAGE_PERCENT = 0.08 -- 8% per hit
+
+-- ===== 判斷是否為 NPC =====
+local function isNPC(model)
+    return model
+        and model:IsA("Model")
+        and model:FindFirstChildOfClass("Humanoid")
+        and Players:GetPlayerFromCharacter(model) == nil
+end
+
+-- ===== 主技能 =====
+local function ExecuteSkill(target)
+    if not isNPC(target) then
+        warn("❌ 非 NPC，技能已阻止")
+        return
+    end
+
+    local hum = target:FindFirstChildOfClass("Humanoid")
+    if not hum or hum.Health <= 0 then return end
+
+    -- ===== 破見聞（標記）=====
+    target:SetAttribute("ObservationBroken", true)
+    task.delay(MARK_TIME, function()
+        if target then
+            target:SetAttribute("ObservationBroken", false)
+        end
+    end)
+
+    -- ===== 強控（Freeze）=====
+    local oldSpeed = hum.WalkSpeed
+    local oldJump = hum.JumpPower
+
+    hum.WalkSpeed = 0
+    hum.JumpPower = 0
+
+    task.delay(STUN_TIME, function()
+        if hum then
+            hum.WalkSpeed = oldSpeed
+            hum.JumpPower = oldJump
+        end
+    end)
+
+    -- ===== 多段百分比傷害 =====
+    task.spawn(function()
+        for i = 1, HIT_COUNT do
+            if hum.Health > 0 then
+                hum:TakeDamage(hum.MaxHealth * DAMAGE_PERCENT)
+            end
+            task.wait(HIT_INTERVAL)
+        end
+    end)
+end
+
+-- ===== 測試用：對 Workspace 裡的 Dummy 施放 =====
+for _, model in ipairs(workspace:GetChildren()) do
+    if model.Name == "Dummy" then
+        ExecuteSkill(model)
+    end
+end）
+
 -- 透視功能
 local about = UITab4:section("透視",true)
 
